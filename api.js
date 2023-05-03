@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // Set up middleware
-app.use(bodyParser.json());
+app.use(express.urlencoded());
 
 
 mongoose.connect('mongodb+srv://dzsportsteam:teamofproject2023@cluster0.kkxcapz.mongodb.net/test', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -14,16 +14,36 @@ mongoose.connect('mongodb+srv://dzsportsteam:teamofproject2023@cluster0.kkxcapz.
 
 //model
 const userSchema = new mongoose.Schema({
-    fullName : String,
-    email : String,
-    password : String,
-    phone:Number,
-    birthday:String,
-    wilaya:String,
-    daira:String,
-    baladia:String,
-    favsport:String,
-    gender:String,
+    fullName :{ 
+       type:String,
+      },
+    email : { 
+      type:String,
+     },
+    password : { 
+      type:String,
+     },
+    phone:{ 
+      type:String,
+     },
+    birthday:{ 
+      type:String,
+     },
+    wilaya:{ 
+      type:String,
+     },
+    daira:{ 
+      type:String,
+     },
+    baladia:{ 
+      type:String,
+     },
+    favsport:{ 
+      type:String,
+     },
+    gender:{ 
+      type:String,
+     },
   });
 
   const User = mongoose.model('User', userSchema);
@@ -31,10 +51,12 @@ const userSchema = new mongoose.Schema({
 
 
 // Define the registration route
+
 app.post('/register', async (req, res) => {
   try {
     // Create a new user object with the data from the request body
     const user = new User(req.body);
+    console.log(req.body);
     // Save the user to the database
     await user.save();
     // Return a success message
